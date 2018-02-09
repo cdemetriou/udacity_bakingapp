@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.android.bakingapp.main.MainActivity">
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="?attr/colorPrimary"
+            android:elevation="5dp"
+            android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
+            app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:app="http://schemas.android.com/apk/res-auto" />
+
+        <fragment
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:id="@+id/main_fragment"
+            android:name="com.android.bakingapp.main.MainFragment"
+            android:layout_width="match_parent"
+            app:layout_constraintTop_toBottomOf="@id/toolbar"
+            android:layout_height="match_parent" />
+
+    </android.support.constraint.ConstraintLayout>
+</layout>
