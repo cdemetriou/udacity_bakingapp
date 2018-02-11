@@ -1,4 +1,4 @@
-package com.android.bakingapp.main;
+package com.android.bakingapp.modules.main;
 
 import android.arch.lifecycle.ViewModel;
 import android.arch.lifecycle.ViewModelProvider;

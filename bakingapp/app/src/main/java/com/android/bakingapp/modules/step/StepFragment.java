@@ -1,4 +1,4 @@
-package com.android.bakingapp.main;
+package com.android.bakingapp.modules.step;
 
 import android.content.Context;
 import android.content.res.Configuration;
@@ -20,6 +20,7 @@ import com.android.bakingapp.data.Constants;
 import com.android.bakingapp.databinding.FragmentStepBinding;
 import com.android.bakingapp.model.Recipe;
 import com.android.bakingapp.model.Step;
+import com.android.bakingapp.modules.detail.DetailActivity;
 import com.bumptech.glide.Glide;
 import com.google.android.exoplayer2.DefaultLoadControl;
 import com.google.android.exoplayer2.ExoPlayerFactory;

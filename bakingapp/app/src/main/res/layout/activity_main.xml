@@ -3,7 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context="com.android.bakingapp.main.MainActivity">
+    tools:context="com.android.bakingapp.modules.main.MainActivity">
 
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
@@ -23,7 +23,7 @@
         <fragment
             xmlns:android="http://schemas.android.com/apk/res/android"
             android:id="@+id/main_fragment"
-            android:name="com.android.bakingapp.main.MainFragment"
+            android:name="com.android.bakingapp.modules.main.MainFragment"
             android:layout_width="match_parent"
             app:layout_constraintTop_toBottomOf="@id/toolbar"
             android:layout_height="match_parent" />

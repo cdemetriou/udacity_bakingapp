@@ -1,4 +1,4 @@
-package com.android.bakingapp;
+package com.android.bakingapp.widget;
 
 import android.app.IntentService;
 import android.content.Context;
@@ -21,7 +21,7 @@ public class UpdateIngedientsService extends IntentService {
 
     public static void startBakingService(Context context, ArrayList<String> fromActivityIngredientsList) {
         Intent intent = new Intent(context, UpdateIngedientsService.class);
-        intent.putExtra(FROM_ACTIVITY_INGREDIENTS_LIST,fromActivityIngredientsList);
+        intent.putExtra(FROM_ACTIVITY_INGREDIENTS_LIST, fromActivityIngredientsList);
         context.startService(intent);
     }
 
@@ -30,9 +30,9 @@ public class UpdateIngedientsService extends IntentService {
         if (intent != null) {
             ArrayList<String> fromActivityIngredientsList = intent.getExtras().getStringArrayList(FROM_ACTIVITY_INGREDIENTS_LIST);
 
-            Intent newIntent = new Intent("android.appwidget.action.APPWIDGET_UPDATE2");
-            newIntent.setAction("android.appwidget.action.APPWIDGET_UPDATE2");
-            newIntent.putExtra(FROM_ACTIVITY_INGREDIENTS_LIST,fromActivityIngredientsList);
+            Intent newIntent = new Intent("android.appwidget.action.APPWIDGET_UPDATE_INGREDIENTS");
+            newIntent.setAction("android.appwidget.action.APPWIDGET_UPDATE_INGREDIENTS");
+            newIntent.putExtra(FROM_ACTIVITY_INGREDIENTS_LIST, fromActivityIngredientsList);
             sendBroadcast(newIntent);
         }
     }

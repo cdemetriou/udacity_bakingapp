@@ -1,4 +1,4 @@
-package com.android.bakingapp.main;
+package com.android.bakingapp.modules.main;
 
 import android.arch.lifecycle.ViewModelProvider;
 import android.arch.lifecycle.ViewModelProviders;
@@ -19,6 +19,7 @@ import com.android.bakingapp.R;
 import com.android.bakingapp.data.Constants;
 import com.android.bakingapp.databinding.FragmentMainBinding;
 import com.android.bakingapp.model.Recipe;
+import com.android.bakingapp.modules.detail.DetailActivity;
 
 import java.util.ArrayList;
 

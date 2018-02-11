@@ -1,4 +1,4 @@
-package com.android.bakingapp.main;
+package com.android.bakingapp.modules.detail;
 
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
@@ -11,6 +11,7 @@ import com.android.bakingapp.data.Constants;
 import com.android.bakingapp.databinding.ActivityDetailBinding;
 import com.android.bakingapp.model.Recipe;
 import com.android.bakingapp.model.Step;
+import com.android.bakingapp.modules.step.StepFragment;
 
 import java.util.ArrayList;
 import java.util.List;

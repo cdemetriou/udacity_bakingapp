@@ -1,4 +1,4 @@
-package com.android.bakingapp.main;
+package com.android.bakingapp.modules.main;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;

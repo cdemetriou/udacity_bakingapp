@@ -12,25 +12,25 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".main.MainActivity">
+        <activity android:name=".modules.main.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".main.DetailActivity" />
+        <activity android:name=".modules.detail.DetailActivity" />
 
-        <service android:name=".UpdateIngedientsService" />
+        <service android:name=".widget.UpdateIngedientsService" />
 
         <service
-            android:name=".GridWidgetService"
+            android:name=".widget.GridWidgetService"
             android:permission="android.permission.BIND_REMOTEVIEWS" />
 
-        <receiver android:name=".BakingAppWidget">
+        <receiver android:name=".widget.BakingAppWidgetProvider">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
-                <action android:name="android.appwidget.action.APPWIDGET_UPDATE2" />
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE_INGREDIENTS" />
             </intent-filter>
 
             <meta-data

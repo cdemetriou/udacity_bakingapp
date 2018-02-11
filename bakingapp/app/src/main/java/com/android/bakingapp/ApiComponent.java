@@ -1,7 +1,7 @@
 package com.android.bakingapp;
 
 import com.android.bakingapp.data.Repository;
-import com.android.bakingapp.main.MainFragment;
+import com.android.bakingapp.modules.main.MainFragment;
 
 import javax.inject.Singleton;
 

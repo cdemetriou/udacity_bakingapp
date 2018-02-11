@@ -5,7 +5,7 @@ import android.arch.lifecycle.ViewModelProvider;
 import com.android.bakingapp.data.Constants;
 import com.android.bakingapp.data.DataService;
 import com.android.bakingapp.data.Repository;
-import com.android.bakingapp.main.CustomViewModelFactory;
+import com.android.bakingapp.modules.main.CustomViewModelFactory;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 

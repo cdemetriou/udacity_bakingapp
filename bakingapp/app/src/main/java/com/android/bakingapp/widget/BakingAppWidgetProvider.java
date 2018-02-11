@@ -1,4 +1,4 @@
-package com.android.bakingapp;
+package com.android.bakingapp.widget;
 
 import android.app.PendingIntent;
 import android.appwidget.AppWidgetManager;
@@ -8,16 +8,15 @@ import android.content.Context;
 import android.content.Intent;
 import android.widget.RemoteViews;
 
-import com.android.bakingapp.main.DetailActivity;
+import com.android.bakingapp.R;
+import com.android.bakingapp.modules.detail.DetailActivity;
 
 import java.util.ArrayList;
-
-import static com.android.bakingapp.UpdateIngedientsService.FROM_ACTIVITY_INGREDIENTS_LIST;
 
 /**
  * Implementation of App Widget functionality.
  */
-public class BakingAppWidget extends AppWidgetProvider {
+public class BakingAppWidgetProvider extends AppWidgetProvider {
 
     static ArrayList<String> ingredientsList = new ArrayList<>();
 
@@ -26,9 +25,9 @@ public class BakingAppWidget extends AppWidgetProvider {
                                 int appWidgetId) {
 
         Intent appIntent = new Intent(context, DetailActivity.class);
-        //appIntent.addCategory(Intent.ACTION_MAIN);
-        //appIntent.addCategory(Intent.CATEGORY_LAUNCHER);
-        //appIntent.addFlags(Intent.FLAG_ACTIVITY_BROUGHT_TO_FRONT|Intent.FLAG_ACTIVITY_SINGLE_TOP);
+        appIntent.addCategory(Intent.ACTION_MAIN);
+        appIntent.addCategory(Intent.CATEGORY_LAUNCHER);
+        appIntent.addFlags(Intent.FLAG_ACTIVITY_BROUGHT_TO_FRONT|Intent.FLAG_ACTIVITY_SINGLE_TOP);
         PendingIntent appPendingIntent = PendingIntent.getActivity(context, 0, appIntent,0);
 
 
@@ -55,13 +54,15 @@ public class BakingAppWidget extends AppWidgetProvider {
     @Override
     public void onReceive(Context context, Intent intent) {
         AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
-        int[] appWidgetIds = appWidgetManager.getAppWidgetIds(new ComponentName(context, BakingAppWidget.class));
+        int[] appWidgetIds = appWidgetManager.getAppWidgetIds(new ComponentName(context, BakingAppWidgetProvider.class));
 
-        if (intent.getAction().equals("android.appwidget.action.APPWIDGET_UPDATE2")) {
-            ingredientsList = intent.getExtras().getStringArrayList(FROM_ACTIVITY_INGREDIENTS_LIST);
+        final String action = intent.getAction();
+
+        if (action.equals("android.appwidget.action.APPWIDGET_UPDATE_INGREDIENTS")) {
+            ingredientsList = intent.getExtras().getStringArrayList(UpdateIngedientsService.FROM_ACTIVITY_INGREDIENTS_LIST);
             appWidgetManager.notifyAppWidgetViewDataChanged(appWidgetIds, R.id.grid_view);
             //Now update all widgets
-            BakingAppWidget.updateWidgetIngredients(context, appWidgetManager, appWidgetIds);
+            BakingAppWidgetProvider.updateWidgetIngredients(context, appWidgetManager, appWidgetIds);
             super.onReceive(context, intent);
         }
     }

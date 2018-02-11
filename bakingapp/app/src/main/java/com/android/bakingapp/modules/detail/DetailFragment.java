@@ -1,4 +1,4 @@
-package com.android.bakingapp.main;
+package com.android.bakingapp.modules.detail;
 
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
@@ -9,7 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.android.bakingapp.R;
-import com.android.bakingapp.UpdateIngedientsService;
+import com.android.bakingapp.widget.UpdateIngedientsService;
 import com.android.bakingapp.databinding.FragmentDetailBinding;
 import com.android.bakingapp.model.Ingredient;
 import com.android.bakingapp.model.Recipe;

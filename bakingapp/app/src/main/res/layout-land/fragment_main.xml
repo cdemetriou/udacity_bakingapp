@@ -6,7 +6,7 @@
 
         <variable
             name="viewModel"
-            type="com.android.bakingapp.main.MainViewModel" />
+            type="com.android.bakingapp.modules.main.MainViewModel" />
         <import type="android.view.View" />
     </data>
 

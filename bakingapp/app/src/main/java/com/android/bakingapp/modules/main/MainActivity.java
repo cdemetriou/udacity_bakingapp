@@ -1,4 +1,4 @@
-package com.android.bakingapp.main;
+package com.android.bakingapp.modules.main;
 
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
