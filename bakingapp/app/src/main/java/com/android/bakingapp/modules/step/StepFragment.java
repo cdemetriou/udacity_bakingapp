@@ -41,6 +41,7 @@ import com.google.android.exoplayer2.util.Util;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.android.bakingapp.data.Constants.LARGE_LANDSCAPE;
 import static com.android.bakingapp.data.Constants.STEP_INDEX_EXTRA;
 import static com.android.bakingapp.data.Constants.STEP_LIST_EXTRA;
 
@@ -57,14 +58,11 @@ public class StepFragment extends Fragment {
     private ArrayList<Step> steps = new ArrayList<>();
     private int index;
     private Handler mainHandler;
-    String recipeName;
     Step currentStep;
 
     private OnItemClickListener itemClickListener;
 
-    public interface OnItemClickListener {
-        void onItemClick(List<Step> allSteps, int Index, String recipeName);
-    }
+    public interface OnItemClickListener {void onItemClick(List<Step> allSteps, int Index);}
 
     public StepFragment(){}
 
@@ -116,7 +114,7 @@ public class StepFragment extends Fragment {
             String video = currentStep.getVideoURL();
             initializePlayer(Uri.parse(video));
 
-            if (binding.getRoot().getTag() == "sw600dp-land") {
+            if (binding.getRoot().getTag() == LARGE_LANDSCAPE) {
                 getActivity().findViewById(R.id.fragment_container2).setLayoutParams(new LinearLayout.LayoutParams(-1,-2));
                 binding.playerView.setResizeMode(AspectRatioFrameLayout.RESIZE_MODE_FIXED_WIDTH);
             }
@@ -151,7 +149,7 @@ public class StepFragment extends Fragment {
                         if (mExoPlayer !=null){
                             mExoPlayer.stop();
                         }
-                        itemClickListener.onItemClick(steps,Integer.valueOf(steps.get(index).getId()) + 1,recipeName);
+                        itemClickListener.onItemClick(steps,Integer.valueOf(steps.get(index).getId()) + 1);
                     }
                     else Toast.makeText(getContext(),"This is thee last step.", Toast.LENGTH_SHORT).show();
                     break;
@@ -160,7 +158,7 @@ public class StepFragment extends Fragment {
                         if (mExoPlayer !=null){
                             mExoPlayer.stop();
                         }
-                        itemClickListener.onItemClick(steps,Integer.valueOf(steps.get(index).getId()) - 1,recipeName);
+                        itemClickListener.onItemClick(steps,Integer.valueOf(steps.get(index).getId()) - 1);
                     }
                     else Toast.makeText(getActivity(),"This is the first step.", Toast.LENGTH_SHORT).show();
                     break;

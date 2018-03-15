@@ -9,7 +9,6 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,6 +24,7 @@ import java.util.ArrayList;
 
 import javax.inject.Inject;
 
+import static com.android.bakingapp.data.Constants.PHONE_LANDSCAPE;
 import static com.android.bakingapp.data.Constants.RECIPE_LIST_EXTRA;
 
 /**
@@ -48,12 +48,8 @@ public class MainFragment extends Fragment {
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
-        Log.d(TAG,"onCreate");
-
         super.onCreate(savedInstanceState);
-        ((MyApplication) getActivity().getApplication())
-                .getApplicationComponent()
-                .inject(this);
+        ((MyApplication) getActivity().getApplication()).getApplicationComponent().inject(this);
     }
 
     @Override
@@ -63,7 +59,7 @@ public class MainFragment extends Fragment {
         recipesAdapter =new RecipesAdapter(getActivity(), recipeListener);
         binding.recipeRecyclerview.setAdapter(recipesAdapter);
 
-        if (binding.mainFragmentRoot.getTag().equals("phone-land")){
+        if (binding.mainFragmentRoot.getTag().equals(PHONE_LANDSCAPE)){
             GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(),3);
             binding.recipeRecyclerview.setLayoutManager(gridLayoutManager);
         }
@@ -77,11 +73,9 @@ public class MainFragment extends Fragment {
 
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        viewModel = ViewModelProviders.of(this, viewModelFactory)
-                .get(MainViewModel.class);
+        viewModel = ViewModelProviders.of(this, viewModelFactory).get(MainViewModel.class);
 
         viewModel.init();
-
         viewModel.getRecipes()
                 .observe(this, recipes -> {
                     recipeList = (ArrayList<Recipe>) recipes;
@@ -90,8 +84,6 @@ public class MainFragment extends Fragment {
     }
 
     private final RecipesAdapter.OnItemClickListener recipeListener = (Recipe recipe) -> {
-        Log.d(TAG, recipe.getName());
-
         Intent detailIntent = new Intent(getActivity(), DetailActivity.class);
         detailIntent.putExtra(Constants.RECIPE_EXTRA, recipe);
         detailIntent.putParcelableArrayListExtra(RECIPE_LIST_EXTRA, recipeList);

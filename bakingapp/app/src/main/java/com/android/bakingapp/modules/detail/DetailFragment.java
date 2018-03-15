@@ -9,14 +9,14 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.android.bakingapp.R;
-import com.android.bakingapp.widget.UpdateIngedientsService;
 import com.android.bakingapp.databinding.FragmentDetailBinding;
 import com.android.bakingapp.model.Ingredient;
 import com.android.bakingapp.model.Recipe;
+import com.android.bakingapp.widget.WidgetManager;
 
-import java.util.ArrayList;
 import java.util.List;
 
+import static com.android.bakingapp.MyApplication.getWidgetManager;
 import static com.android.bakingapp.data.Constants.RECIPE_EXTRA;
 
 /**
@@ -28,6 +28,8 @@ public class DetailFragment extends android.support.v4.app.Fragment {
     private final static String TAG = "DetailFragment";
     FragmentDetailBinding binding;
     Recipe recipe;
+
+
 
     public DetailFragment(){}
 
@@ -41,27 +43,18 @@ public class DetailFragment extends android.support.v4.app.Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_detail, container, false);
 
-        if(savedInstanceState != null) {
-            recipe = savedInstanceState.getParcelable(RECIPE_EXTRA);
-        }
-        else {
-            recipe = getArguments().getParcelable(RECIPE_EXTRA);
-        }
+        if(savedInstanceState != null) recipe = savedInstanceState.getParcelable(RECIPE_EXTRA);
+        else recipe = getArguments().getParcelable(RECIPE_EXTRA);
 
         List<Ingredient> ingredients = recipe.getIngredients();
-
-        ArrayList<String> recipeIngredientsForWidgets= new ArrayList<>();
-
         for (Ingredient it: ingredients) {
             binding.recipeDetailText.append("- "+ it.getIngredient()+"\n");
             binding.recipeDetailText.append("    Quantity: "+ it.getQuantity().toString()+" ");
             binding.recipeDetailText.append("    Measure: "+ it.getMeasure()+"\n\n");
-
-            recipeIngredientsForWidgets.add(it.getIngredient()+"\n"+
-                    "Quantity: "+ it.getQuantity().toString()+"\n"+
-                    "Measure: "+ it.getMeasure()+"\n");
         }
-        UpdateIngedientsService.startBakingService(getContext(),recipeIngredientsForWidgets);
+
+        WidgetManager widgetManager = getWidgetManager();
+        widgetManager.setRecipe(recipe);
 
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
         binding.recipeDetailRecyclerview.setLayoutManager(mLayoutManager);

@@ -13,7 +13,10 @@ public class Constants {
     public static final String STEP_LIST_EXTRA = "stepsList";
     public static final String STEP_INDEX_EXTRA = "stepIndex";
 
+    public static final String PHONE_LANDSCAPE = "phone-land";
+    public static final String TABLET_LANDSCAPE = "tablet-land";
+    public static final String LARGE_LANDSCAPE =  "sw600dp-land";
 
-    public static final String BACK_STACK_DETAIL = "backStackDetail";
-    public static final String BACK_STACK_STEP = "backStackStepDetail";
+    public static final String BACK_STACK_DETAIL = "back_stack_detail";
+    public static final String BACK_STACK_STEP = "back_stack_step_detail";
 }

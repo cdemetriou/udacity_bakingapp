@@ -3,7 +3,6 @@ package com.android.bakingapp.modules.main;
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MutableLiveData;
 import android.arch.lifecycle.ViewModel;
-import android.util.Log;
 
 import com.android.bakingapp.data.Repository;
 import com.android.bakingapp.model.Recipe;
@@ -27,7 +26,6 @@ public class MainViewModel extends ViewModel {
 
 
     public void init() {
-        if (repository != null) Log.e("Repo", String.valueOf(repository));
         recipeList = repository.getRecipes();
     }
 

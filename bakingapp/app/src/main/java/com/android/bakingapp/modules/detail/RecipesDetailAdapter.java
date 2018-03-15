@@ -18,50 +18,41 @@ import java.util.List;
 
 public class RecipesDetailAdapter extends RecyclerView.Adapter<RecipesDetailAdapter.RecyclerViewHolder> {
 
-    List<Step> lSteps;
-    private String recipeName;
-
+    List<Step> stepList;
     Context context;
-    private OnItemClickListener onItemClickListener;
+    private OnStepClickListener onStepClickListener;
 
-    public interface OnItemClickListener {
-        void onItemClick(List<Step> stepsOut, int clickedItemIndex, String recipeName);
+    public interface OnStepClickListener {
+        void onItemClick(List<Step> steps, int index);
     }
 
-    public RecipesDetailAdapter(Context context, OnItemClickListener itemClickListener) {
+    public RecipesDetailAdapter(Context context, OnStepClickListener stepClickListener) {
         this.context = context;
-        this.onItemClickListener = itemClickListener;
+        this.onStepClickListener = stepClickListener;
     }
 
 
     @Override
     public RecyclerViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
-        Context context = viewGroup.getContext();
+        LayoutInflater inflater = LayoutInflater.from(viewGroup.getContext());
+        View view = inflater.inflate(R.layout.recipe_detail_item, viewGroup, false);
 
-        int layoutIdForListItem = R.layout.recipe_detail_item;
-
-        LayoutInflater inflater = LayoutInflater.from(context);
-        View view = inflater.inflate(layoutIdForListItem, viewGroup, false);
-
-        RecyclerViewHolder viewHolder = new RecyclerViewHolder(view);
-
-        return viewHolder;
+        return new RecyclerViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(RecyclerViewHolder holder, int position) {
-        holder.textView.setText("   "+lSteps.get(position).getId()+". "+ lSteps.get(position).getShortDescription());
+        holder.textView.setText(String.format("   %s. %s", stepList.get(position).getId(), stepList.get(position).getShortDescription()));
     }
 
     @Override
     public int getItemCount() {
 
-        return lSteps !=null ? lSteps.size():0 ;
+        return stepList !=null ? stepList.size() : 0 ;
     }
 
     public void setMasterRecipeData(List<Step> newSteps) {
-        //lSteps = recipesIn;
-        lSteps= newSteps;
+        stepList = newSteps;
         notifyDataSetChanged();
     }
 
@@ -80,7 +71,7 @@ public class RecipesDetailAdapter extends RecyclerView.Adapter<RecipesDetailAdap
         @Override
         public void onClick(View v) {
             int clickedPosition = getAdapterPosition();
-            onItemClickListener.onItemClick(lSteps,clickedPosition,recipeName);
+            onStepClickListener.onItemClick(stepList, clickedPosition);
         }
     }
 }
