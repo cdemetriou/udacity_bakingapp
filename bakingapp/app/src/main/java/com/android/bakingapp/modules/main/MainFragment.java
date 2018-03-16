@@ -18,6 +18,7 @@ import com.android.bakingapp.R;
 import com.android.bakingapp.data.Constants;
 import com.android.bakingapp.databinding.FragmentMainBinding;
 import com.android.bakingapp.model.Recipe;
+import com.android.bakingapp.modules.SimpleIdlingResource;
 import com.android.bakingapp.modules.detail.DetailActivity;
 
 import java.util.ArrayList;
@@ -43,6 +44,7 @@ public class MainFragment extends Fragment {
     @Inject
     ViewModelProvider.Factory viewModelFactory;
 
+    SimpleIdlingResource idlingResource;
 
     public MainFragment(){}
 
@@ -68,6 +70,13 @@ public class MainFragment extends Fragment {
             binding.recipeRecyclerview.setLayoutManager(linearLayoutManager);
         }
 
+        idlingResource = (SimpleIdlingResource)((MainActivity)getActivity()).getIdlingResource();
+
+        if (idlingResource != null) {
+            idlingResource.setIdleState(false);
+        }
+
+
         return binding.getRoot();
     }
 
@@ -80,6 +89,9 @@ public class MainFragment extends Fragment {
                 .observe(this, recipes -> {
                     recipeList = (ArrayList<Recipe>) recipes;
                     recipesAdapter.setRecipes(recipes);
+                    if (idlingResource != null) {
+                        idlingResource.setIdleState(true);
+                    }
                 });
     }
 
