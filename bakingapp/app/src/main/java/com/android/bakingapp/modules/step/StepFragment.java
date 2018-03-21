@@ -55,6 +55,11 @@ public class StepFragment extends Fragment {
     FragmentStepBinding binding;
     private SimpleExoPlayer mExoPlayer;
     private BandwidthMeter bandwidthMeter;
+
+    long playbackPosition = 0;
+    int currentWindow = 0;
+    boolean playWhenReady = true;
+
     private ArrayList<Step> steps = new ArrayList<>();
     private int index;
     private Handler mainHandler;
@@ -71,7 +76,10 @@ public class StepFragment extends Fragment {
         super.onSaveInstanceState(outState);
         outState.putParcelableArrayList(STEP_LIST_EXTRA, steps);
         outState.putInt(STEP_INDEX_EXTRA, index);
+
+        outState.putBoolean("video", true);
     }
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -111,8 +119,7 @@ public class StepFragment extends Fragment {
         }
 
         if (currentStep.getVideoURL() != "" && currentStep.getVideoURL() != null) {
-            String video = currentStep.getVideoURL();
-            initializePlayer(Uri.parse(video));
+            initializePlayer();
 
             if (binding.getRoot().getTag() == LARGE_LANDSCAPE) {
                 getActivity().findViewById(R.id.fragment_container2).setLayoutParams(new LinearLayout.LayoutParams(-1,-2));
@@ -167,7 +174,7 @@ public class StepFragment extends Fragment {
         }
     };
 
-    private void initializePlayer(Uri mediaUri) {
+    private void initializePlayer() {
         if (mExoPlayer == null) {
             // Create an instance of the ExoPlayer.
             TrackSelection.Factory videoTrackSelectionFactory = new AdaptiveVideoTrackSelection.Factory(bandwidthMeter);
@@ -179,49 +186,53 @@ public class StepFragment extends Fragment {
 
             // Prepare media source
             String userAgent = Util.getUserAgent(getContext(), "Baking App");
-            MediaSource mediaSource = new ExtractorMediaSource(mediaUri, new DefaultDataSourceFactory(
+            MediaSource mediaSource = new ExtractorMediaSource(Uri.parse(currentStep.getVideoURL()), new DefaultDataSourceFactory(
                     getContext(), userAgent), new DefaultExtractorsFactory(), null, null);
             mExoPlayer.prepare(mediaSource);
-            mExoPlayer.setPlayWhenReady(true);
+
+            mExoPlayer.setPlayWhenReady(playWhenReady);
+            mExoPlayer.seekTo(currentWindow, playbackPosition);
         }
     }
 
     @Override
-    public void onDetach() {
-        super.onDetach();
-        if (mExoPlayer !=null) {
-            releasePlayer();
+    public void onStart() {
+        super.onStart();
+        if (Util.SDK_INT > 23) {
+            initializePlayer();
         }
     }
 
     @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        if (mExoPlayer !=null) {
-            releasePlayer();
-            mExoPlayer =null;
-        }
-    }
-
-    @Override
-    public void onStop() {
-        super.onStop();
-        if (mExoPlayer !=null) {
-            releasePlayer();
+    public void onResume() {
+        super.onResume();
+        if ((Util.SDK_INT <= 23 || mExoPlayer == null)) {
+            initializePlayer();
         }
     }
 
     @Override
     public void onPause() {
         super.onPause();
-        if (mExoPlayer !=null) {
+        if (Util.SDK_INT <= 23) {
+            releasePlayer();
+        }
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        if (Util.SDK_INT > 23) {
             releasePlayer();
         }
     }
 
     private void releasePlayer() {
+        playbackPosition = mExoPlayer.getCurrentPosition();
+        currentWindow = mExoPlayer.getCurrentWindowIndex();
+        playWhenReady = mExoPlayer.getPlayWhenReady();
         mExoPlayer.stop();
         mExoPlayer.release();
+        mExoPlayer = null;
     }
-
 }

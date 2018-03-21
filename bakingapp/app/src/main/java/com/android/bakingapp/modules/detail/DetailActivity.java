@@ -2,9 +2,11 @@ package com.android.bakingapp.modules.detail;
 
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 
 import com.android.bakingapp.R;
 import com.android.bakingapp.data.Constants;
@@ -57,6 +59,8 @@ public class DetailActivity extends AppCompatActivity implements RecipesDetailAd
         }
         else recipe = getIntent().getExtras().getParcelable(Constants.RECIPE_EXTRA);
 
+        // todo check prefs if video true >> setupStep  also need to pass the media player values
+
         getSupportActionBar().setTitle(recipe.getName());
 
         Bundle bundle = new Bundle();
@@ -92,7 +96,12 @@ public class DetailActivity extends AppCompatActivity implements RecipesDetailAd
 
     @Override
     public void onItemClick(List<Step> stepsOut, int clickedItemIndex) {
+        setupStep(stepsOut, clickedItemIndex);
 
+    }
+
+
+    private void setupStep(List<Step> stepsOut, int clickedItemIndex) {
         StepFragment fragment = new StepFragment();
         FragmentManager fragmentManager = getSupportFragmentManager();
 
