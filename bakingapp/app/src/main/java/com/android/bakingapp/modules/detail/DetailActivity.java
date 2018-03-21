@@ -1,18 +1,18 @@
 package com.android.bakingapp.modules.detail;
 
+import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 
 import com.android.bakingapp.R;
 import com.android.bakingapp.data.Constants;
 import com.android.bakingapp.databinding.ActivityDetailBinding;
 import com.android.bakingapp.model.Recipe;
 import com.android.bakingapp.model.Step;
+import com.android.bakingapp.modules.step.StepActivity;
 import com.android.bakingapp.modules.step.StepFragment;
 
 import java.util.ArrayList;
@@ -58,8 +58,6 @@ public class DetailActivity extends AppCompatActivity implements RecipesDetailAd
             recipe = Recipe.getWithId(recipesList, id);
         }
         else recipe = getIntent().getExtras().getParcelable(Constants.RECIPE_EXTRA);
-
-        // todo check prefs if video true >> setupStep  also need to pass the media player values
 
         getSupportActionBar().setTitle(recipe.getName());
 
@@ -117,8 +115,10 @@ public class DetailActivity extends AppCompatActivity implements RecipesDetailAd
                     .addToBackStack(BACK_STACK_STEP).commit();
         }
         else {
-            fragmentManager.beginTransaction().replace(R.id.fragment_container, fragment)
-                    .addToBackStack(BACK_STACK_STEP).commit();
+            Intent intent = new Intent(this, StepActivity.class);
+            intent.putParcelableArrayListExtra(STEP_LIST_EXTRA, steps);
+            intent.putExtra(STEP_INDEX_EXTRA, clickedItemIndex);
+            startActivity(intent);
         }
     }
 

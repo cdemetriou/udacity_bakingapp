@@ -21,6 +21,7 @@
         </activity>
         <activity android:name=".modules.detail.DetailActivity" />
 
+        <activity android:name=".modules.step.StepActivity" />
 
         <receiver android:name=".widget.WidgetProvider">
             <intent-filter>

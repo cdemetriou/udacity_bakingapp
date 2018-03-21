@@ -13,6 +13,10 @@ public class Constants {
     public static final String STEP_LIST_EXTRA = "stepsList";
     public static final String STEP_INDEX_EXTRA = "stepIndex";
 
+    public static final String PLAYBACK_POSITION_EXTRA = "playbackPosition";
+    public static final String CURRENT_WINDOW_EXTRA = "currentWindow";
+    public static final String PLAY_WHEN_READY_EXTRA = "playWhenReady";
+
     public static final String PHONE_LANDSCAPE = "phone-land";
     public static final String TABLET_LANDSCAPE = "tablet-land";
     public static final String LARGE_LANDSCAPE =  "sw600dp-land";
